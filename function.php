@@ -1,23 +1,38 @@
-      // Change Logo
-
-function change_login_logo() { ?>
-    <style type="text/css">
-        body.login div#login h1 a {
-            background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/images/you-site-logo.png);
-            padding-bottom: 30px;
+// Change Login Logo
+function custom_login_logo() {
+    echo '<style type="text/css">
+        h1 a { 
+          background-image:url(/images/logo.png) !important; 
+          width:##px !important;
+          height:##px !important;
+          background-size:##px !important;
+            -webkit-background-size:##px;}
+      
+      /* Change Background Color */
+        body {
+            background-color:##F;
         }
-    </style>
-<?php }
-add_action( 'login_enqueue_scripts', 'my_login_logo' );
+        
+        /* hide back and forgot password */
+        #backtoblog {
+            display:none;
+        }
+        #nav {
+            display:none;
+        }
+    </style>';
+}
+add_action('login_head', 'custom_login_logo');
 
-      //Change the a tag surrounding the logo to your sites homepage
-
+// Change Logo link to homepage
 function login_logo_url_home() {
-    return home_url();
+    return home_url( '/');
 }
-add_filter( 'login_headerurl', 'login_logo_url_home' );
 
-function login_logo_url_home_name() {
-    return 'Site Name';
+// Change rollover name to blog name
+function new_login_title() {
+    return get_option('blogname');
 }
-add_filter( 'login_headertitle', 'login_logo_url_home_name' );
+
+add_filter( 'login_headerurl', 'login_logo_url_home' );
+add_filter('login_headertitle', 'new_login_title');
